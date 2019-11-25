@@ -31,16 +31,39 @@ $(function() {
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
+        allFeeds.forEach( function(obj) {
+            console.log(obj);
+            
+            it('it has a url defined', function() {
+                expect(obj.url).toBeDefined();
+            });
+
+            it('the url is not empty', function() {
+                expect(obj.url.length).not.toBe(0);
+            });
+        
+        });
 
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
+        allFeeds.forEach( function(obj) {
+            it('it has a name defined', function() {
+                expect(obj.name).toBeDefined();
+            });
+
+            it('the name is not empty', function() {
+                expect(obj.name.length).not.toBe(0);
+            });
+        });
+
     });
 
 
     /* TODO: Write a new test suite named "The menu" */
+    // describe("The Menu", function() {
 
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
@@ -48,11 +71,55 @@ $(function() {
          * hiding/showing of the menu element.
          */
 
+        // it('should hide menu by default', function() {
+        //     expect(document.body.classList).toContain('menu-hidden');
+        // });
+    
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
+        
+    //     menuIcon = document.getElementsByClassName('.menu-icon-link')[0];
+    //     spyOn(menuIcon, 'toggleClass');
+
+    //     it('tracks that the spy was called', function() {
+    //         expect(menuIcon.toggleClass).toHaveBeenCalled();
+    //     });
+
+    //     it('should show menu', function() {
+    //         expect(document.body.classList).not.toContain('menu-hidden');
+    //     });
+
+    //     spyOn(menuIcon, 'toggleClass');
+
+    //     it('tracks that the spy was called again', function() {
+    //         expect(menuIcon.toggleClass).toHaveBeenCalled();
+    //     });
+
+    //     it('should re-hide the menu', function() {
+    //         expect(document.body.classList).toContain('menu-hidden');
+    //     });
+
+
+    //       beforeEach( function() {
+    //           let spy = jasmine.createSpy('click');
+    //       });
+
+    //       it("tracks that the spy was called", function() {
+    //           expect('click').toHaveBeenCalled();
+    //       })
+
+    //       spyOn('.menu-icon-link', click());
+         
+    //      it('should display the menu when clicked', function() {
+             
+    //         $('.menu-icon-link').trigger('click');
+    //         expect(document.body.classList).not.toContain('menu-hidden');
+    //      });
+
+    // });
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
