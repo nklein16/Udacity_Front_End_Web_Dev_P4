@@ -34,10 +34,15 @@ All that is needed to run jasmine is included in the project, so all you have to
 ## Reference Material
 
 Udacity Front End Nanodegree course material, particularly Lesson 9: Writing Test Suites
+
 https://devhints.io/jasmine
+
 https://knowledge.udacity.com/questions/31448
+
 https://knowledge.udacity.com/questions/1667
+
 https://knowledge.udacity.com/questions/14179
+
 https://www.youtube.com/watch?v=_XwH-xfvydw
 
 
