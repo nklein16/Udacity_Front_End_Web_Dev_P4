@@ -72,7 +72,7 @@ $(function() {
 
 
     /* TODO: Write a new test suite named "The menu" */
-    describe("The Menu", function() {
+    describe("The menu", function() {
 
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
@@ -90,26 +90,38 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
         
-        // By using BeforeEach() here we both reduce the number of times we have to declare the variables currently in its scope while simultaneously
-        // avoiding conflicts between the results of the two expectations, which might otherwise fail when falling outside the BeforeEach( )scope,
-        // since the tests are set to run randomly. 
-        beforeEach( function() {
-            let cL = document.body.classList;
-            let menuIcon = $('.menu-icon-link');
+         /* By using BeforeEach() here we both reduce the number of times we have to declare the variables currently in its
+          * scope while simultaneously avoiding conflicts between the results of the two expectations, which might otherwise
+          * fail when falling outside the BeforeEach() scope, since the tests are set to run randomly.
+          */ 
         
+            //  beforeEach( function() {
+                // let cL = document.body.classList;
+                // let menuIcon = $('.menu-icon-link');
+                // let menuIcon = document.body;
+                // let menuHiddenIndicator = document.body.classList.contains
+            // });
+
+            // // Testing for the existence of the side menu
             it('should toggle when clicked', function() {                    
-                menuIcon.click();
-                expect(cL.contains(menuIcon)).toBe(false);
+
+                // Initiate a click on the icon that links to the menu
+                $('.menu-icon-link').trigger('click');
+                // Check that the class menu-hidden has been removed from the body tag
+                expect($('body').hasClass('menu-hidden')).toBe(false);
+                
+                // Initiate another click on the icon that links to the menu
+                $('.menu-icon-link').trigger('click');
+                // Check that the class menu-hidden has been added back to the body tag
+                expect($('body').hasClass('menu-hidden')).toBe(true);
             });
 
-            it('should toggle when clicked again', function() {
-                menuIcon.click();
-                expect(cL.contains(menuIcon)).toBe(true);
-            });
-        });
+        }); // End of suite "The menu"
 
         // **********************************************************************
-        
+
+        // Spy section - it turns out that spies may or may not be needed
+
         // menuIcon = document.querySelector('.menu-icon-link');
         // let spy = jasmine.createSpy(toggleSpy);
 
@@ -131,21 +143,6 @@ $(function() {
 
         // **********************************************************************
         
-        // WHY DOESN'T THIS WORK?
-
-        // document.body.classList.remove('menu-hidden');
-        // it('should no longer hide menu', function() {
-        //     expect(document.body.classList).not.toContain('menu-hidden');
-        // });
-
-        // document.body.classList.add('menu-hidden');
-
-        // it('should re-hide menu', function() {
-        //     expect(document.body.classList).toContain('menu-hidden');
-        // });
-
-        // **********************************************************************
-
         // let toggleSpy = spyOn(menuIcon, 'toggleClass');
 
         // toggleSpy.toggleClass(menuIcon);
@@ -179,7 +176,6 @@ $(function() {
         // });
         
         // **********************************************************************
-            
 
     //       beforeEach( function() {
     //           let spy = jasmine.createSpy('click');
@@ -198,30 +194,31 @@ $(function() {
     //      });
 
             // **********************************************************************
-            
-    });
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
-    // describe("Initial Entries", function() {
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test will require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
+    /* TODO: Write a test that ensures when the loadFeed
+    * function is called and completes its work, there is at least
+    * a single .entry element within the .feed container.
+    * Remember, loadFeed() is asynchronous so this test will require
+    * the use of Jasmine's beforeEach and asynchronous done() function.
+    */
 
-        // Get feed object
-        // let feed = $('.feed');
-        
-        // Verify the feed has more than one entry in it
-        // entries = result.feed.entries;
-        // entriesLen = entries.length;
+    describe("Initial Entries", function() {
 
-        // it("contains entries", function() {
-        //     expect(entriesLen).not.toBe(0);
-        // })
-    // });
+        // Using beforeEach and passing the indicator function done() as an argument to
+        // handle asynchronous nature of the loadFeed() function.
+        beforeEach(function (done) {
+            loadFeed(0, function() {
+                done();
+            });
+        });
+
+        // Verify that there is at least one .entry element in the .feed container
+        it("contains entries; that is, the feed's length is not zero", function() {
+            expect($('.feed').length).not.toBe(0);
+        });
+    });
 
     /* TODO: Write a new test suite named "New Feed Selection" */
 
@@ -230,8 +227,34 @@ $(function() {
          * Remember, loadFeed() is asynchronous.
          */
     
-         // describe("New Feed Selection", function() {
+         describe("New Feed Selection", function() {
 
-    // });
+            let feedOne, feedTwo;
+
+            beforeEach(function(done) {
+                loadFeed(0, function() {        
+                    
+                    // Get first feed
+                    feedOne = $('.feed').find('h2').eq(0)[0].innerText;
+
+                    loadFeed(1, function() {
+                        
+                        // Get second feed
+                        feedTwo = $('.feed').find('h2').eq(1)[0].innerText;
+                    
+                        // Indicate end of callback 
+                        done();
+                    });
+    
+                });
+
+            });
+
+            // Verify that the content has changed
+            it("has been loaded, thus changing the content", function() {
+                expect(feedOne).not.toEqual(feedTwo);
+            });
+
+        }); // End New Feed Selection
     
 }());
