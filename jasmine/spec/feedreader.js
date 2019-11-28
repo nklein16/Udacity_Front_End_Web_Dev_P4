@@ -1,3 +1,5 @@
+'use strict';
+
 /* feedreader.js
  *
  * This is the spec file that Jasmine will read and contains
@@ -55,9 +57,11 @@ $(function() {
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
-        //  Gets the name of each feed obj and checks
-        // (a) that it is defined, and 
-        // (b) that it is not empty (name length > 0 characters)
+
+        /*  Gets the name of each feed obj and checks
+         * (a) that it is defined, and 
+         * (b) that it is not empty (name length > 0 characters)
+         */
         allFeeds.forEach( function(obj) {
             it('it has a name defined', function() {
                 expect(obj.name).toBeDefined();
@@ -89,111 +93,32 @@ $(function() {
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
-        
-         /* By using BeforeEach() here we both reduce the number of times we have to declare the variables currently in its
-          * scope while simultaneously avoiding conflicts between the results of the two expectations, which might otherwise
-          * fail when falling outside the BeforeEach() scope, since the tests are set to run randomly.
-          */ 
-        
-            //  beforeEach( function() {
-                // let cL = document.body.classList;
-                // let menuIcon = $('.menu-icon-link');
-                // let menuIcon = document.body;
-                // let menuHiddenIndicator = document.body.classList.contains
-            // });
 
-            // // Testing for the existence of the side menu
-            it('should toggle when clicked', function() {                    
+        // Testing for the existence of the side menu
+        it('should toggle when clicked', function() {                    
 
-                // Initiate a click on the icon that links to the menu
-                $('.menu-icon-link').trigger('click');
-                // Check that the class menu-hidden has been removed from the body tag
-                expect($('body').hasClass('menu-hidden')).toBe(false);
-                
-                // Initiate another click on the icon that links to the menu
-                $('.menu-icon-link').trigger('click');
-                // Check that the class menu-hidden has been added back to the body tag
-                expect($('body').hasClass('menu-hidden')).toBe(true);
-            });
+            // Three tests are now done to separate these tests, as per rubric, from the one above
 
-        }); // End of suite "The menu"
+            // Testing that menu is showing
+            // Initiate click on the icon that links to the menu
+            $('.menu-icon-link').trigger('click');
+            // Check that the class menu-hidden has been added back to the body tag
+            expect($('body').hasClass('menu-hidden')).toBe(false);
 
-        // **********************************************************************
-
-        // Spy section - it turns out that spies may or may not be needed
-
-        // menuIcon = document.querySelector('.menu-icon-link');
-        // let spy = jasmine.createSpy(toggleSpy);
-
-        // let menuIcon = $('.menu-icon-link');
-        // let toggleSpy = null;
-
-        // beforeEach(function() {
+            // Testing that menu is hidden
+            // Initiate a second click on the icon that links to the menu
+            $('.menu-icon-link').trigger('click');
+            // Check that the class menu-hidden has been removed from the body tag
+            expect($('body').hasClass('menu-hidden')).toBe(true);
             
-        //     toggleSpy = {
-        //         hideMenu: $('body').toggleClass('menu-hidden')
-        //     }
+            // Testing that menu is showing again
+            // Initiate a final click on the icon that links to the menu
+            $('.menu-icon-link').trigger('click');
+            // Check that the class menu-hidden has been added back to the body tag
+            expect($('body').hasClass('menu-hidden')).toBe(false);
+        });
 
-        //     spyOn(toggleSpy, hideMenu)
-        // });
-
-        // it('should spy on toggleClass', function() {
-        //     expect(toggleSpy.hideMenu).toHaveBeenCalled();
-        // });
-
-        // **********************************************************************
-        
-        // let toggleSpy = spyOn(menuIcon, 'toggleClass');
-
-        // toggleSpy.toggleClass(menuIcon);
-        // expect(toggleSpy).toHaveBeenCalled();
-
-        // it('should spy on toggleClass', function() {
-        //     toggleSpy = spyOn(menuIcon, 'toggleClass');
-        //     toggleSpy.toggleClass(menuIcon);
-        //     expect(toggleSpy).toHaveBeenCalled();
-        // });
-
-        // let menuIcon = $('.menu-icon-link');
-        // menuIcon.css.
-        // menuIcon.on('click', function() {
-        //     $('body').toggleClass('menu-hidden');
-        // });
-
-
-        // it('should show sliding menu', function() {
-        //     expect(document.body.classList).not.toContain('menu-hidden');
-        // });
-
-        // spyOn(menuIcon, 'toggleClass');
-
-        // it('tracks that the spy was called again', function() {
-        //     expect(menuIcon.toggleClass).toHaveBeenCalled();
-        // });
-
-        // it('should re-hide the sliding menu', function() {
-        //     expect(document.body.classList).toContain('menu-hidden');
-        // });
-        
-        // **********************************************************************
-
-    //       beforeEach( function() {
-    //           let spy = jasmine.createSpy('click');
-    //       });
-
-    //       it("tracks that the spy was called", function() {
-    //           expect('click').toHaveBeenCalled();
-    //       })
-
-    //       spyOn('.menu-icon-link', click());
-         
-    //      it('should display the menu when clicked', function() {
-             
-    //         $('.menu-icon-link').trigger('click');
-    //         expect(document.body.classList).not.toContain('menu-hidden');
-    //      });
-
-            // **********************************************************************
+    }); // End of suite "The menu"
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
