@@ -33,7 +33,7 @@ $(function() {
         });
 
 
-        /* TODO: Write a test that loops through each feed
+        /* This test loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
@@ -43,21 +43,41 @@ $(function() {
         // (b) that it is not empty (length > 0 characters)
         // Note that this does NOT check the validity of the link or its formulation,
         // although we were not asked to test that aspect of it.
-        allFeeds.forEach( function(obj) {
-            console.log(obj);
-            
-            it('it has a url defined', function() {
-                expect(obj.url).toBeDefined();
-            });
-
-            it('the url is not empty', function() {
-                expect(obj.url.length).not.toBe(0);
-            });
         
+        // Attempt 1 - This works, but was rejected by reviewer
+        // allFeeds.forEach( function(obj) {
+        //     console.log(obj);
+            
+        //     it('it has a url defined', function() {
+        //         expect(obj.url).toBeDefined();
+        //     });
+
+        //     it('the url is not empty', function() {
+        //         expect(obj.url.length).not.toBe(0);
+        //     });
+        
+        // });
+
+        // Attempt 2 (after rejection above)
+
+        it('each have a URL defined and the URL is not empty', function() {
+            
+            allFeeds.forEach( function(feed) {
+             
+                // Checking first expectation
+                expect(feed.url).toBeDefined();
+                // See that it exists in the console (that it does not come back as undefined)
+                console.log('RSS Feeds, Feed URL: ' + feed.url);
+
+                // Checking second expectation
+                expect(feed.url.length).not.toBe(0);
+                // See that the length of each url is > 0
+                console.log('RSS Feeds, Feed URL length: ' + feed.url.length);
+            });            
         });
 
 
-        /* TODO: Write a test that loops through each feed
+        /* This test loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
@@ -66,33 +86,53 @@ $(function() {
          * (a) that it is defined, and 
          * (b) that it is not empty (name length > 0 characters)
          */
-        allFeeds.forEach( function(obj) {
-            it('it has a name defined', function() {
-                expect(obj.name).toBeDefined();
-            });
 
-            it('the name is not empty', function() {
+        //  Attempt 1 - This works, but was rejected by reviewer
+        // allFeeds.forEach( function(obj) {
+        //     it('it has a name defined', function() {
+        //         expect(obj.name).toBeDefined();
+        //     });
+
+        //     it('the name is not empty', function() {
+        //         expect(obj.name.length).not.toBe(0);
+        //     });
+        // });
+
+        // Attempt 2 (after rejection above)
+        it('each have a name defined and the name is not empty', function() {
+
+            allFeeds.forEach( function(obj) {
+                
+                // Checking first condition
+                expect(obj.name).toBeDefined();
+                // See that it exists in the console (that it does not come back as undefined)
+                console.log("RSS Feeds - Object's name: " + obj.name);
+                
+                // Checking second condition
                 expect(obj.name.length).not.toBe(0);
+                // See that the length of each name is > 0
+                console.log("RSS Feeds - Length of object's name: " + obj.name.length);
+
             });
         });
 
-    });
+    }); // End of suite RSS Feeds
 
 
-    /* TODO: Write a new test suite named "The menu" */
+    /* Write a new test suite named "The menu" */
     describe("The menu", function() {
 
-        /* TODO: Write a test that ensures the menu element is
+        /* This test ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
 
-        it('should hide menu by default', function() {
+        it('should be hidden by default', function() {
             expect(document.body.classList.contains('menu-hidden')).toBe(true);
         });
     
-         /* TODO: Write a test that ensures the menu changes
+         /* This test ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
@@ -119,13 +159,13 @@ $(function() {
 
             // Testing that menu is showing 
             // Initiate a second click on the icon that links to the menu
-            $('.menu-icon-link').trigger('click');
+            $('.menu-icon-link').click();
             // Check that the class menu-hidden has been removed from the body tag
             expect($('body').hasClass('menu-hidden')).toBe(false);
             
             // Testing that menu is hidden again
             // Initiate a final click on the icon that links to the menu
-            $('.menu-icon-link').trigger('click');
+            $('.menu-icon-link').click();
             // Check that the class menu-hidden has been added back to the body tag
             expect($('body').hasClass('menu-hidden')).toBe(true);
         });
@@ -134,7 +174,7 @@ $(function() {
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
-    /* TODO: Write a test that ensures when the loadFeed
+    /* This test ensures when the loadFeed
     * function is called and completes its work, there is at least
     * a single .entry element within the .feed container.
     * Remember, loadFeed() is asynchronous so this test will require
@@ -143,59 +183,53 @@ $(function() {
 
     describe("Initial Entries", function() {
 
-        it('feed is defined', function() {
-            expect(allFeeds.length).not.toBe(0);
-        });
-
         // Using beforeEach and passing the indicator function done() as an argument to
         // handle asynchronous nature of the loadFeed() function.
         beforeEach(function (done) {
-            loadFeed(0, function() {
-                done();
-            });
+            loadFeed(0, done);
         });
 
         // Verify that there is at least one .entry element in the .feed container
-        it("contains entries; that is, the feed's length is not zero", function() {
-            expect($('.feed').length).not.toBe(0);
+        it("exist; that is, the feed's length is not zero", function() {
+            expect($('.feed .entry').length).toBeGreaterThan(0);
         });
     });
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
+    /* Write a new test suite named "New Feed Selection" */
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
-    
-         describe("New Feed Selection", function() {
+    /* This test ensures that when a new feed is loaded
+        * by the loadFeed function that the content actually changes.
+        * Remember, loadFeed() is asynchronous.
+        */
 
-            let feedOne, feedTwo;
+    describe("New Feed Selection", function() {
 
-            beforeEach(function(done) {
-                loadFeed(0, function() {        
+        let feedOne, feedTwo;
+
+        beforeEach(function(done) {
+            loadFeed(0, function() {        
+                
+                // Get first feed
+                feedOne = $('.feed').find('h2').eq(0)[0].innerText;
+
+                loadFeed(1, function() {
                     
-                    // Get first feed
-                    feedOne = $('.feed').find('h2').eq(0)[0].innerText;
-
-                    loadFeed(1, function() {
-                        
-                        // Get second feed
-                        feedTwo = $('.feed').find('h2').eq(1)[0].innerText;
-                    
-                        // Indicate end of callback 
-                        done();
-                    });
-    
+                    // Get second feed
+                    feedTwo = $('.feed').find('h2').eq(1)[0].innerText;
+                
+                    // Indicate end of callback 
+                    done();
                 });
 
             });
 
-            // Verify that the content has changed
-            it("has been loaded, thus changing the content", function() {
-                expect(feedOne).not.toEqual(feedTwo);
-            });
+        });
 
-        }); // End New Feed Selection
+        // Verify that the content has changed
+        it("has been loaded, thus changing the content", function() {
+            expect(feedOne).not.toEqual(feedTwo);
+        });
+
+    }); // End New Feed Selection
     
 }());
